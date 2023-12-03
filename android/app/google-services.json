@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1001485320107",
+    "project_id": "chat-41243",
+    "storage_bucket": "chat-41243.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001485320107:android:07f33e8deef789ec659cee",
+        "android_client_info": {
+          "package_name": "com.example.dundaser"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD952MfazN566REO28a0OtvmdPeYaoyImE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
