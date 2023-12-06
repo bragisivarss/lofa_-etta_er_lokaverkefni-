@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1001485320107",
-    "project_id": "chat-41243",
-    "storage_bucket": "chat-41243.appspot.com"
+    "project_number": "477329499720",
+    "project_id": "lokaverkprufa",
+    "storage_bucket": "lokaverkprufa.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1001485320107:android:07f33e8deef789ec659cee",
+        "mobilesdk_app_id": "1:477329499720:android:864dcc281ea66613fa5a7d",
         "android_client_info": {
           "package_name": "com.example.dundaser"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD952MfazN566REO28a0OtvmdPeYaoyImE"
+          "current_key": "AIzaSyAAKyOQtbCKJdKd-jZoKJ-eQFOR7Cr-rcw"
         }
       ],
       "services": {

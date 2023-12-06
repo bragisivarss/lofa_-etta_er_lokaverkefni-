@@ -63,6 +63,7 @@ class _AddDrinkScreen extends State<AddDrinkScreen> {
 
     String? uName = userData.data()!['username'] as String;
     String? userId = user.uid;
+    const itemId = DateTime.now;
 
     Map<String, dynamic> drinkData = {
       'title': enteredName,
@@ -70,7 +71,8 @@ class _AddDrinkScreen extends State<AddDrinkScreen> {
       'rating': fixedRating,
       'image': imageUrl,
       'username': uName,
-      'userId': userId
+      'userId': userId,
+      'itemId': itemId
     };
 
     await drinksCollection.add(drinkData);

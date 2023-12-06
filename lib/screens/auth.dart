@@ -83,6 +83,7 @@ class _AuthScreen extends State<AuthScreen> {
           content: Text(error.message ?? 'Authentication Failed.'),
         ),
       );
+    } finally {
       setState(() {
         _waitingAuth = false;
       });

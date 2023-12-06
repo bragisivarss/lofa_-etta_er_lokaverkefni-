@@ -35,7 +35,11 @@ class _MainScreenState extends ConsumerState<MainScreen> {
           shadowColor: const Color.fromARGB(116, 255, 13, 13),
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           centerTitle: true,
-          title: const Text('AppBar'),
+          title: Text(
+            'AppBar',
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondaryContainer),
+          ),
         ),
         body: const DrinksList());
   }

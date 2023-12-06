@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD952MfazN566REO28a0OtvmdPeYaoyImE',
-    appId: '1:1001485320107:android:07f33e8deef789ec659cee',
-    messagingSenderId: '1001485320107',
-    projectId: 'chat-41243',
-    storageBucket: 'chat-41243.appspot.com',
+    apiKey: 'AIzaSyAAKyOQtbCKJdKd-jZoKJ-eQFOR7Cr-rcw',
+    appId: '1:477329499720:android:864dcc281ea66613fa5a7d',
+    messagingSenderId: '477329499720',
+    projectId: 'lokaverkprufa',
+    storageBucket: 'lokaverkprufa.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCZ929-4MST48rLue24JJvJj-D6HGLfFrg',
-    appId: '1:1001485320107:ios:97eca94bfc70cb32659cee',
-    messagingSenderId: '1001485320107',
-    projectId: 'chat-41243',
-    storageBucket: 'chat-41243.appspot.com',
+    apiKey: 'AIzaSyCBHzfW6AcYQWsQoxgeR1U3EiAaOe4uT74',
+    appId: '1:477329499720:ios:c9113378399b1245fa5a7d',
+    messagingSenderId: '477329499720',
+    projectId: 'lokaverkprufa',
+    storageBucket: 'lokaverkprufa.appspot.com',
     iosBundleId: 'com.example.dundaser',
   );
 }

@@ -1,4 +1,5 @@
 import 'package:dundaser/screens/add_drink.dart';
+import 'package:dundaser/screens/favorites_screen.dart';
 import 'package:dundaser/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -59,7 +60,13 @@ class _MainDrawerState extends State<MainDrawer> {
                       fontSize: 18,
                     ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) => const FavoriteScreen(),
+                  ),
+                );
+              },
             ),
             const SizedBox(
               height: 20,

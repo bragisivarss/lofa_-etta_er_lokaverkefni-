@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 //Model for drink so a single drink
 
@@ -13,15 +13,14 @@ class Drink {
   final String title;
   final String about;
   final double rating;
-  final File image;
+  final String image;
 
-  factory Drink.fromFirestore(Map<String, dynamic> data) {
+  factory Drink.fromSnapshot(
+      QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
     return Drink(
-      title: data['title'] ?? '',
-      about: data['about'] ?? '',
-      rating: (data['rating'] ?? 0.0).toDouble(),
-      image: File(data['image'] ?? ''),
-      // Add more parameters for additional fields
-    );
+        title: snapshot['title'],
+        image: snapshot['image'],
+        about: snapshot['about'],
+        rating: snapshot['rating'] as double);
   }
 }

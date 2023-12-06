@@ -179,6 +179,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
+            elevation: 10,
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
             onTap: (int index) {
               if (index == 0) {
                 FirebaseAuth.instance.signOut();
@@ -192,6 +194,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     MaterialPageRoute(builder: (ctx) => const MainScreen()));
               }
             },
+            selectedLabelStyle:
+                TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            unselectedLabelStyle:
+                TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            selectedItemColor: Theme.of(context)
+                .colorScheme
+                .onBackground, // Color for selected item
+            unselectedItemColor: Theme.of(context).colorScheme.onBackground,
             items: const [
               BottomNavigationBarItem(
                 label: 'Exit',
