@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dundaser/screens/auth.dart';
 import 'package:dundaser/screens/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dundaser/widgets/change_username.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -9,15 +10,22 @@ class ProfileScreen extends StatefulWidget {
 
   @override
   State<ProfileScreen> createState() {
-    return _ProfileScreenState();
+    return ProfileScreenState();
   }
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class ProfileScreenState extends State<ProfileScreen> {
+  late TextEditingController _usernameController;
   late Future<DocumentSnapshot> userDataFuture;
   late Future<int> userPostCount;
 
-  Future<DocumentSnapshot> _fetchUserData() async {
+  @override
+  void dispose() {
+    super.dispose();
+    _usernameController.dispose();
+  }
+
+  Future<DocumentSnapshot> _getUserData() async {
     final user = FirebaseAuth.instance.currentUser!;
     return await FirebaseFirestore.instance
         .collection('users')
@@ -40,12 +48,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    userDataFuture = _fetchUserData();
+    userDataFuture = _getUserData();
     userPostCount = _getUserPostCount();
+    _usernameController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
+    _usernameController = TextEditingController();
     return FutureBuilder(
       future: userDataFuture,
       builder: (ctx, userSnapshot) {
@@ -60,6 +70,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
 
         var userData = userSnapshot.data!.data() as Map<String, dynamic>;
+
+        String userImage = userData['image_url'];
+
+        // ignore: unused_local_variable
+        String username = userData['username'];
+
+        void updateUsername(String newUsername) {
+          setState(() {
+            username = newUsername;
+          });
+        }
 
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
@@ -76,105 +97,260 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: Theme.of(context).colorScheme.onSecondaryContainer),
             ),
           ),
-          body: Column(
+          body: ListView(
             children: [
-              const SizedBox(
-                height: 25,
-              ),
-              Row(
+              Column(
                 children: [
+                  const SizedBox(height: 20),
+                  // ignore: sized_box_for_whitespace
+                  Container(
+                    height: 250,
+                    width: 230,
+                    decoration: ShapeDecoration(
+                      //color: Colors.white,
+                      shape: Border.all(
+                            color: Theme.of(context).colorScheme.primary,
+                            width: 3,
+                          ) +
+                          Border.all(
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            width: 2,
+                          ) +
+                          Border.all(
+                            color: Theme.of(context).colorScheme.secondary,
+                            width: 1,
+                          ),
+                    ),
+                    child: Image.network(
+                      userImage,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   const SizedBox(
-                    width: 10,
+                    height: 15,
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 5, left: 62, right: 62, bottom: 40),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 40),
+                        Center(
+                            child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              elevation: 4,
+                              shadowColor:
+                                  Theme.of(context).colorScheme.surfaceTint,
+                              shape: StadiumBorder(
+                                side: BorderSide(
+                                    width: 1,
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              ),
+                              backgroundColor: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer),
+                          label: Text(
+                            'Change Profile Photo',
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer),
+                          ),
+                          onPressed: () {},
+                          icon: const Icon(Icons.camera_alt),
+                        )),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                   DecoratedBox(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(2),
                       border: Border.all(
-                          width: 1,
-                          color: const Color.fromARGB(100, 100, 100, 100)),
+                        width: 10,
+                        color: const Color.fromARGB(100, 100, 100, 100),
+                      ),
                     ),
-                    child: Text(
-                      ' Current Username: ',
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Theme.of(context)
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 25.5, bottom: 25.5),
+                      height: 200,
+                      width: 300,
+                      decoration: ShapeDecoration(
+                        gradient: LinearGradient(colors: [
+                          Theme.of(context)
                               .colorScheme
-                              .onSecondaryContainer),
+                              .primary
+                              .withOpacity(0.1),
+                          Theme.of(context).colorScheme.primary.withOpacity(0.2)
+                        ]),
+                        shape: Border.all(
+                              color: Theme.of(context).colorScheme.primary,
+                              width: 1.5,
+                            ) +
+                            Border.all(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                              width: 1,
+                            ) +
+                            Border.all(
+                              color: Theme.of(context).colorScheme.secondary,
+                              width: 0.5,
+                            ),
+                      ),
+                      child: Column(
+                        children: [
+                          DecoratedBox(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                  width: 1,
+                                  color:
+                                      const Color.fromARGB(100, 100, 100, 100)),
+                            ),
+                            child: Text(
+                              ' Current Username: ',
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondaryContainer),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            username,
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w300,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer),
+                          ),
+                          const SizedBox(height: 18),
+                          Center(
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 4,
+                                  shadowColor:
+                                      Theme.of(context).colorScheme.surfaceTint,
+                                  shape: StadiumBorder(
+                                    side: BorderSide(
+                                        width: 1,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary),
+                                  ),
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer),
+                              label: Text(
+                                'Change Username',
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer),
+                              ),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return UsernameChangeDialog(
+                                          currentUsername: username,
+                                          onUpdate: updateUsername);
+                                    });
+                              },
+                              icon: const Icon(Icons.threesixty_rounded),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(
-                    width: 10,
+                    height: 45,
                   ),
-                  Text(
-                    userData['username'],
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w300,
-                        color:
-                            Theme.of(context).colorScheme.onSecondaryContainer),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(2),
+                      border: Border.all(
+                        width: 10,
+                        color: const Color.fromARGB(100, 100, 100, 100),
+                      ),
+                    ),
+                    child: FutureBuilder(
+                      future: userPostCount,
+                      builder: (ctx, postSnapshot) {
+                        if (postSnapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (postSnapshot.hasError) {
+                          return Text(
+                              'Error fetching post count: ${postSnapshot.error}');
+                        } else {
+                          int postCount = postSnapshot.data!;
+                          return Opacity(
+                            opacity: 0.8,
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 10),
+                              height: 50,
+                              width: 300,
+                              decoration: ShapeDecoration(
+                                gradient: LinearGradient(colors: [
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.1),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.2)
+                                ]),
+                                shape: Border.all(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      width: 1.5,
+                                    ) +
+                                    Border.all(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                      width: 1,
+                                    ) +
+                                    Border.all(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                      width: 0.5,
+                                    ),
+                              ),
+                              child: Text(
+                                // ignore: unnecessary_brace_in_string_interps
+                                'Total Reviews: ${postCount}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w300,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondaryContainer),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ],
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.vertical(
-                    bottom: Radius.circular(2),
-                    top: Radius.circular(6),
-                  ),
-                  border: Border.all(
-                    width: 1,
-                    color: const Color.fromARGB(100, 100, 100, 100),
-                  ),
-                ),
-                child: FutureBuilder(
-                  future: userPostCount,
-                  builder: (ctx, postSnapshot) {
-                    if (postSnapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (postSnapshot.hasError) {
-                      return Text(
-                          'Error fetching post count: ${postSnapshot.error}');
-                    } else {
-                      int postCount = postSnapshot.data!;
-                      return Text(
-                        // ignore: unnecessary_brace_in_string_interps
-                        ' You Have Made a Total of: ${postCount} reviews ',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSecondaryContainer),
-                      );
-                    }
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Center(
-                child: FloatingActionButton.extended(
-                  backgroundColor:
-                      Theme.of(context).colorScheme.primaryContainer,
-                  shape: StadiumBorder(
-                    side: BorderSide(
-                        width: 1, color: Theme.of(context).colorScheme.primary),
-                  ),
-                  //extendedPadding: EdgeInsets.only(left: 10, right: 10),
-                  onPressed: () {},
-                  label: Text('Change Username',
-                      style: TextStyle(
-                          letterSpacing: 0.4,
-                          fontSize: 16,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSecondaryContainer)),
-                ),
               ),
             ],
           ),
