@@ -10,19 +10,26 @@ class ProfileScreen extends StatefulWidget {
 
   @override
   State<ProfileScreen> createState() {
-    return ProfileScreenState();
+    return _ProfileScreenState();
   }
 }
 
-class ProfileScreenState extends State<ProfileScreen> {
-  late TextEditingController _usernameController;
+class _ProfileScreenState extends State<ProfileScreen> {
+  var _usernameController = TextEditingController();
   late Future<DocumentSnapshot> userDataFuture;
   late Future<int> userPostCount;
+  late String _username;
+
+  void updateUsername(String newUsername) {
+    setState(() {
+      _username = newUsername;
+    });
+  }
 
   @override
   void dispose() {
-    super.dispose();
     _usernameController.dispose();
+    super.dispose();
   }
 
   Future<DocumentSnapshot> _getUserData() async {
@@ -75,12 +82,6 @@ class ProfileScreenState extends State<ProfileScreen> {
 
         // ignore: unused_local_variable
         String username = userData['username'];
-
-        void updateUsername(String newUsername) {
-          setState(() {
-            username = newUsername;
-          });
-        }
 
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
@@ -264,8 +265,8 @@ class ProfileScreenState extends State<ProfileScreen> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return UsernameChangeDialog(
-                                          currentUsername: username,
-                                          onUpdate: updateUsername);
+                                        currentUsername: username,
+                                      );
                                     });
                               },
                               icon: const Icon(Icons.threesixty_rounded),
