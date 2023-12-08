@@ -182,7 +182,7 @@ class DrinkDetailScreen extends ConsumerWidget {
                     height: 50,
                   ),
                   OverflowBar(
-                    spacing: 15,
+                    spacing: 12,
                     children: [
                       ElevatedButton.icon(
                         style: ButtonStyle(

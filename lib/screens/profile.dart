@@ -18,6 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   var _usernameController = TextEditingController();
   late Future<DocumentSnapshot> userDataFuture;
   late Future<int> userPostCount;
+  // ignore: unused_field
   late String _username;
 
   void updateUsername(String newUsername) {
