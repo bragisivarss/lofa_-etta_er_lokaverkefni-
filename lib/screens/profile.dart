@@ -265,8 +265,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return UsernameChangeDialog(
-                                        currentUsername: username,
-                                      );
+                                          currentUsername: username,
+                                          onUpdate: updateUsername);
                                     });
                               },
                               icon: const Icon(Icons.threesixty_rounded),

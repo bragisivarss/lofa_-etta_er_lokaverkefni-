@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UsernameChangeDialog extends StatefulWidget {
-  const UsernameChangeDialog({super.key, required this.currentUsername});
+  const UsernameChangeDialog(
+      {super.key, required this.currentUsername, required this.onUpdate});
+  final Function(String) onUpdate;
   final String currentUsername;
 
   @override
@@ -41,6 +43,8 @@ class UsernameChangeDialogState extends State<UsernameChangeDialog> {
         ElevatedButton(
           onPressed: () async {
             User? user = FirebaseAuth.instance.currentUser;
+            String newUsername = _usernameController.text;
+            widget.onUpdate(newUsername);
 
             try {
               await FirebaseFirestore.instance
