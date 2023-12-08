@@ -18,6 +18,7 @@ class DrinkDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       appBar: AppBar(
         centerTitle: true,
         elevation: 5,
