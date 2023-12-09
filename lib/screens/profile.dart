@@ -109,7 +109,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 250,
                     width: 230,
                     decoration: ShapeDecoration(
-                      //color: Colors.white,
                       shape: Border.all(
                             color: Theme.of(context).colorScheme.primary,
                             width: 3,
@@ -357,8 +356,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
-            elevation: 10,
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            iconSize: 20,
+            elevation: 8,
+            backgroundColor:
+                Theme.of(context).colorScheme.onSecondary.withOpacity(0.8),
             onTap: (int index) {
               if (index == 0) {
                 FirebaseAuth.instance.signOut();
