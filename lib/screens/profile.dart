@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dundaser/screens/auth.dart';
-import 'package:dundaser/screens/main_screen.dart';
+import 'package:dundaser/models/bottom_navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dundaser/widgets/change_username.dart';
 import 'package:flutter/material.dart';
@@ -355,43 +354,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ],
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            iconSize: 20,
-            elevation: 8,
-            backgroundColor:
-                Theme.of(context).colorScheme.onSecondary.withOpacity(0.8),
-            onTap: (int index) {
-              if (index == 0) {
-                FirebaseAuth.instance.signOut();
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (ctx) => const AuthScreen(),
-                    ),
-                    (route) => false);
-              } else if (index == 1) {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctx) => const MainScreen()));
-              }
-            },
-            selectedLabelStyle:
-                TextStyle(color: Theme.of(context).colorScheme.onBackground),
-            unselectedLabelStyle:
-                TextStyle(color: Theme.of(context).colorScheme.onBackground),
-            selectedItemColor: Theme.of(context)
-                .colorScheme
-                .onBackground, // Color for selected item
-            unselectedItemColor: Theme.of(context).colorScheme.onBackground,
-            items: const [
-              BottomNavigationBarItem(
-                label: 'Exit',
-                icon: Icon(Icons.exit_to_app),
-              ),
-              BottomNavigationBarItem(
-                label: 'Home',
-                icon: Icon(Icons.verified_outlined),
-              ),
-            ],
-          ),
+          bottomNavigationBar: const BottomNavigation(),
         );
       },
     );
