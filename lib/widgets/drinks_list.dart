@@ -66,8 +66,7 @@ class DrinksList extends StatelessWidget {
                             Theme.of(context).colorScheme.onSecondaryContainer),
                   ),
                   subtitle: Text(
-                    // ignore: unnecessary_brace_in_string_interps
-                    'Review: ${preview}...view more?',
+                    'Review: $preview...view more?',
                     style: TextStyle(
                         color:
                             Theme.of(context).colorScheme.onSecondaryContainer,

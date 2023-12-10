@@ -15,6 +15,15 @@ class Drink {
   final double rating;
   final String image;
 
+  factory Drink.fromSnapshots(Map<String, dynamic> data) {
+    return Drink(
+      title: data['title'] as String,
+      image: data['image'] as String,
+      about: data['about'] as String,
+      rating: (data['rating'] as num).toDouble(),
+    );
+  }
+
   factory Drink.fromSnapshot(
       QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
     return Drink(
