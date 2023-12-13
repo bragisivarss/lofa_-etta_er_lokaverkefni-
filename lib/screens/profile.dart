@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dundaser/models/bottom_navigation.dart';
+import 'package:dundaser/widgets/image_input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dundaser/widgets/change_username.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +17,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  File? takenPicture;
   var _usernameController = TextEditingController();
   late Future<DocumentSnapshot> userDataFuture;
   late Future<int> userPostCount;
@@ -159,7 +163,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     .colorScheme
                                     .onSecondaryContainer),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            ImageInput(
+                              onPickImage: (image) {
+                                takenPicture = image;
+                              },
+                            );
+                          },
                           icon: const Icon(Icons.camera_alt),
                         )),
                       ],

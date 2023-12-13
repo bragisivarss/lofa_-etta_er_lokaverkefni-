@@ -19,16 +19,24 @@ class DrinkDetailScreen extends StatelessWidget {
     final db = FirebaseFirestore.instance;
     final user = FirebaseAuth.instance.currentUser!;
 
+    final favId = DateTime.now();
+    String custId = favId.toString();
+
     void addToFavorites() async {
       CollectionReference favoritesCollection =
           db.collection('users').doc(user.uid).collection('favorites');
 
-      await favoritesCollection.add({
+      DocumentReference documentReference = favoritesCollection.doc(custId);
+
+      await documentReference.set({
         'title': drink.title,
         'about': drink.about,
         'rating': drink.rating,
         'image': drink.image,
       });
+
+      // ignore: unused_local_variable
+      String documentId = custId;
     }
 
     return Scaffold(
@@ -226,13 +234,22 @@ class DrinkDetailScreen extends StatelessWidget {
                             ),
                           ),
                           MaterialButton(
-                              elevation: 10,
-                              color: Theme.of(context).colorScheme.background,
-                              shape: const UnderlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8))),
-                              onPressed: () {},
-                              child: const Text('Remove From Favorites'))
+                            elevation: 10,
+                            color: Theme.of(context).colorScheme.background,
+                            shape: const UnderlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
+                            onPressed: () {
+                              () {};
+                            },
+                            child: Text(
+                              'Remove From Favorites',
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer),
+                            ),
+                          ),
                         ],
                       ),
                     ],
