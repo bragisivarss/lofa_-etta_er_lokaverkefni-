@@ -1,35 +1,49 @@
-import 'package:dundaser/screens/drink_details.dart';
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dundaser/models/drink.dart';
+import 'package:dundaser/screens/drink_details.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-class DrinksList extends StatelessWidget {
-  const DrinksList({super.key});
+class FavoritesList extends StatefulWidget {
+  const FavoritesList({super.key});
 
   @override
+  State<FavoritesList> createState() {
+    return _FavoritesList();
+  }
+}
+
+class _FavoritesList extends State<FavoritesList> {
+  @override
   Widget build(BuildContext context) {
+    final curUser = FirebaseAuth.instance.currentUser!;
+
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('drinks').snapshots(),
-      builder: (ctx, drinkSnapshots) {
-        if (drinkSnapshots.connectionState == ConnectionState.waiting) {
+      stream: FirebaseFirestore.instance
+          .collection('users')
+          .doc(curUser.uid)
+          .collection('favorites')
+          .snapshots(),
+      builder: (ctx, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
 
-        if (!drinkSnapshots.hasData || drinkSnapshots.data!.docs.isEmpty) {
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return const Center(
             child: Text('No Reviews Found'),
           );
         }
 
-        if (drinkSnapshots.hasError) {
+        if (snapshot.hasError) {
           return const Center(
             child: Text('Something Went Wrong Try Again Later'),
           );
         }
 
-        final loadedInfo = drinkSnapshots.data!.docs;
+        final loadedInfo = snapshot.data!.docs;
 
         return ListView.builder(
           itemCount: loadedInfo.length,
