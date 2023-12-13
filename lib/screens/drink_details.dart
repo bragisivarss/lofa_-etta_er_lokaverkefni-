@@ -11,9 +11,12 @@ class DrinkDetailScreen extends StatelessWidget {
   const DrinkDetailScreen({
     super.key,
     required this.drink,
+    required this.documentId,
   });
 
   final Drink drink;
+
+  final String documentId;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +41,21 @@ class DrinkDetailScreen extends StatelessWidget {
 
       // ignore: unused_local_variable
       String documentId = custId;
+    }
+
+    void deleteFromFavorites(String uid, String favoriteDocumentId) async {
+      try {
+        // Reference to the favorites collection on db
+        CollectionReference favoritesCollection = FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('favorites');
+
+        Navigator.of(context).pop();
+
+        // Delete an item from favorites
+        await favoritesCollection.doc(favoriteDocumentId).delete();
+      } catch (e) {}
     }
 
     return Scaffold(
@@ -233,7 +251,7 @@ class DrinkDetailScreen extends StatelessWidget {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
                             onPressed: () {
-                              () {};
+                              deleteFromFavorites(user.uid, documentId);
                             },
                             child: Text(
                               'Remove From Favorites',

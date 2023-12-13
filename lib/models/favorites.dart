@@ -87,10 +87,13 @@ class _FavoritesList extends State<FavoritesList> {
                       fontWeight: FontWeight.w300),
                 ),
                 onTap: () {
+                  String documentId = loadedInfo[index].id;
+
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (ctx) => DrinkDetailScreen(
                         drink: Drink.fromSnapshot(loadedInfo[index]),
+                        documentId: documentId,
                       ),
                     ),
                   );
