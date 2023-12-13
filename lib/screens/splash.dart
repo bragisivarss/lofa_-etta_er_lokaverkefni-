@@ -1,3 +1,4 @@
+import 'package:dundaser/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -5,11 +6,9 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('AppBar'),
-      ),
-      body: const Center(
+    return const Scaffold(
+      appBar: CustomAppBar(title: 'Loading...'),
+      body: Center(
         child: Text('Loading..'),
       ),
     );

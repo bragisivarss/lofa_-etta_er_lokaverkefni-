@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dundaser/models/bottom_navigation.dart';
 import 'package:dundaser/models/drink.dart';
 import 'package:dundaser/screens/drink_details.dart';
+import 'package:dundaser/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -45,17 +46,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         } else {
           return Scaffold(
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-            appBar: AppBar(
-              elevation: 5,
-              shadowColor: const Color.fromARGB(116, 255, 13, 13),
-              backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-              centerTitle: true,
-              title: Text(
-                'Favorites!',
-                style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSecondaryContainer),
-              ),
-            ),
+            appBar: const CustomAppBar(title: 'Your Favorites'),
             body: ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {

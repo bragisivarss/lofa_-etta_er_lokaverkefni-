@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dundaser/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -94,15 +95,7 @@ class _AddDrinkScreen extends State<AddDrinkScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-      appBar: AppBar(
-        elevation: 5,
-        shadowColor: const Color.fromARGB(116, 255, 13, 13),
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        centerTitle: true,
-        title: const Text(
-          'Add a Review',
-        ),
-      ),
+      appBar: const CustomAppBar(title: 'Add Review'),
       body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
           children: [

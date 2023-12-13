@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dundaser/models/bottom_navigation.dart';
+import 'package:dundaser/widgets/app_bar.dart';
 import 'package:dundaser/widgets/image_input.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dundaser/widgets/change_username.dart';
@@ -89,19 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-          appBar: AppBar(
-            elevation: 5,
-            shadowColor: const Color.fromARGB(116, 255, 13, 13),
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-            centerTitle: true,
-            title: Text(
-              'Profile',
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w300,
-                  color: Theme.of(context).colorScheme.onSecondaryContainer),
-            ),
-          ),
+          appBar: const CustomAppBar(title: 'Your Profile'),
           body: ListView(
             children: [
               Column(
