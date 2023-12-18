@@ -55,7 +55,9 @@ class DrinkDetailScreen extends StatelessWidget {
 
         // Delete an item from favorites
         await favoritesCollection.doc(favoriteDocumentId).delete();
-      } catch (e) {}
+      } catch (e) {
+        //bua til error drasl ...
+      }
     }
 
     return Scaffold(

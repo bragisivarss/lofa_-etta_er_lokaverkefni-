@@ -15,7 +15,7 @@ class _MainDrawerState extends State<MainDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: 270,
+      //width: 270,
       child: Padding(
         padding: const EdgeInsets.only(top: 35),
         child: Column(
