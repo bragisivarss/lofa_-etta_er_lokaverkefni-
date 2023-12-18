@@ -1,24 +1,43 @@
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+final user = FirebaseAuth.instance.currentUser!;
+final userData = FirebaseFirestore.instance.collection('users').doc(user.uid).get();
 
 class ChangeProfilePictureDialog extends StatefulWidget {
   const ChangeProfilePictureDialog({super.key});
 
   @override
-  State<ChangeProfilePictureDialog> createState() =>
-      _ChangeProfilePictureDialogState();
+  State<ChangeProfilePictureDialog> createState() => _ChangeProfilePictureDialogState();
 }
 
-class _ChangeProfilePictureDialogState
-    extends State<ChangeProfilePictureDialog> {
+class _ChangeProfilePictureDialogState extends State<ChangeProfilePictureDialog> {
   File? _selectedImage;
+
+  void _saveImage() async {
+    if (_selectedImage != null){
+    try{
+    final storageRef = FirebaseStorage.instance.ref().child('user_images').child(user.uid);
+    await storageRef.putFile(_selectedImage!);
+    final imageUrl = await storageRef.getDownloadURL();
+
+    await FirebaseFirestore.instance
+         .collection('users')
+         .doc(user.uid)
+         .update({'image_url': imageUrl});
+  } catch (e) {
+    //Fix this
+  }
+    }
+  }
 
   void _galleryImage() async {
     final imagePicker = ImagePicker();
-    final galleryImage = await imagePicker.pickImage(
-        source: ImageSource.gallery, maxWidth: 400);
+    final galleryImage = await imagePicker.pickImage(source: ImageSource.gallery, maxWidth: 400);
 
     if (galleryImage != null) {
       setState(() {
@@ -29,8 +48,7 @@ class _ChangeProfilePictureDialogState
 
   void _takePicture() async {
     final imagePicker = ImagePicker();
-    final takenImage = await imagePicker.pickImage(
-        source: ImageSource.camera, maxWidth: 400);
+    final takenImage = await imagePicker.pickImage(source: ImageSource.camera, maxWidth: 400);
 
     if (takenImage != null) {
       setState(() {
@@ -42,18 +60,14 @@ class _ChangeProfilePictureDialogState
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor:
-          Theme.of(context).colorScheme.secondaryContainer.withBlue(230),
+      backgroundColor: Theme.of(context).colorScheme.secondaryContainer.withBlue(230),
       title: const Text('Change Profile Picture'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           _selectedImage != null
-              ? CircleAvatar(
-                  radius: 50, backgroundImage: FileImage(_selectedImage!))
-              : const CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Color.fromARGB(100, 100, 100, 100)),
+              ? CircleAvatar(radius: 50, backgroundImage: FileImage(_selectedImage!))
+              : const CircleAvatar(radius: 50, backgroundColor: Color.fromARGB(100, 100, 100, 100)),
           const SizedBox(height: 10),
           const Text('Select or capture a new profile picture'),
           const SizedBox(height: 10),
@@ -83,9 +97,7 @@ class _ChangeProfilePictureDialogState
                 ),
                 label: Text(
                   'Gallery',
-                  style: TextStyle(
-                      color:
-                          Theme.of(context).colorScheme.onSecondaryContainer),
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer),
                 ),
               ),
             ],
@@ -102,7 +114,7 @@ class _ChangeProfilePictureDialogState
         ),
         TextButton(
           onPressed: () {
-            
+            _saveImage();
             Navigator.of(context).pop();
           },
           child: const Text('Save'),
@@ -111,48 +123,3 @@ class _ChangeProfilePictureDialogState
     );
   }
 }
-
-// class ProfilePictureScreen extends StatefulWidget {
-//   const ProfilePictureScreen({super.key});
-
-//   @override
-//   State<ProfilePictureScreen> createState() {
-//     return _ProfilePictureScreenState();
-//   }
-// }
-
-// class _ProfilePictureScreenState extends State<ProfilePictureScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: const CustomAppBar(title: 'Change Profile Picture'),
-//       backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-//       body: Container(
-//           margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-//           height: 250,
-//           width: double.infinity,
-//           decoration: ShapeDecoration(
-//             shape: Border.all(
-//                   color: Theme.of(context).colorScheme.primary,
-//                   width: 3,
-//                 ) +
-//                 Border.all(
-//                   color: Theme.of(context).colorScheme.primaryContainer,
-//                   width: 2,
-//                 ) +
-//                 Border.all(
-//                   color: Theme.of(context).colorScheme.secondary,
-//                   width: 1,
-//                 ),
-//           ),
-//           alignment: Alignment.center,
-//           child: TextButton.icon(
-//             icon: const Icon(Icons.camera),
-//             label: const Text('Take Picture'),
-//             onPressed: () {},
-//           ),
-//         ),
-      
-//     );
-//   }
-// }

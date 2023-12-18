@@ -3,8 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UsernameChangeDialog extends StatefulWidget {
-  const UsernameChangeDialog(
-      {super.key, required this.currentUsername, required this.onUpdate});
+  const UsernameChangeDialog({
+    super.key, 
+    required this.currentUsername, 
+    required this.onUpdate
+    });
+    
   final Function(String) onUpdate;
   final String currentUsername;
 
@@ -70,7 +74,6 @@ class UsernameChangeDialogState extends State<UsernameChangeDialog> {
         ),
         TextButton(
           onPressed: () {
-            // Close the dialog without updating
             Navigator.of(context).pop();
           },
           child: Text(

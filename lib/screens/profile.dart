@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dundaser/models/bottom_navigation.dart';
 import 'package:dundaser/widgets/app_bar.dart';
-import 'package:dundaser/screens/profile_picture.dart';
+import 'package:dundaser/widgets/profile_picture.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dundaser/widgets/change_username.dart';
 import 'package:flutter/material.dart';
@@ -123,7 +123,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-
                   Padding(
                     padding: const EdgeInsets.only(
                         top: 5, left: 62, right: 62, bottom: 40),
