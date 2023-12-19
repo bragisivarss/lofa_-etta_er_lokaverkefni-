@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 class UserImagePicker extends StatefulWidget {
   const UserImagePicker({super.key, required this.onPickImage});
 
+  //Callback function 
   final void Function(File pickedImage) onPickImage;
 
   @override
@@ -31,7 +32,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
     widget.onPickImage(_pickedImageFile!);
   }
 
-  //Rendering what is shown on auth screen
+  //Rendering what is shown on auth screen which includes empty circle avatar 
+  //wich then shows a preview of the taken image
   @override
   Widget build(BuildContext context) {
     return Column(
