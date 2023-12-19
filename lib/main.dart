@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  //Make sure firebase db is initialized in the app and setting options to default
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -19,6 +20,7 @@ void main() async {
 class App extends StatelessWidget {
   const App({super.key});
 
+  //This is the root of the application with some theme configurations
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,6 +31,9 @@ class App extends StatelessWidget {
           background: const Color.fromARGB(255, 173, 158, 220),
         ),
       ),
+      //This is the base of the app which uses streamBuilder so the app
+      //is updated on auth changes instead of future builder which only 
+      //updates 1 time (the first time a future is found)
       home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (ctx, snapshot) {
