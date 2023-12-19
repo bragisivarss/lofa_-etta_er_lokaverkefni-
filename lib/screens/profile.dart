@@ -25,6 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // ignore: unused_field
   late String _username;
 
+  //Function so the user is able to change theyre username
   void updateUsername(String newUsername) {
     setState(() {
       _username = newUsername;
@@ -37,26 +38,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.dispose();
   }
 
+  //Function to access all the data for the logged in user
   Future<DocumentSnapshot> _getUserData() async {
     final user = FirebaseAuth.instance.currentUser!;
-    return await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .get();
+    return await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
   }
 
+  //reference to authentication to get the current user who is logged in
   final user = FirebaseAuth.instance.currentUser!;
 
+  //Function that accesess the db  and fetches all the drinks that are associated 
+  //with the current logged in user then returns the amount of posts the user has made
   Future<int> _getUserPostCount() async {
-    QuerySnapshot<Map<String, dynamic>> userPosts = await FirebaseFirestore
-        .instance
-        .collection('drinks')
-        .where('userId', isEqualTo: user.uid)
-        .get();
+    QuerySnapshot<Map<String, dynamic>> userPosts =
+        await FirebaseFirestore.instance.collection('drinks').where('userId', isEqualTo: user.uid).get();
 
     return userPosts.size;
   }
 
+  //Make the get functions execute so the data will be available on rendering
   @override
   void initState() {
     super.initState();
@@ -81,13 +81,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           );
         }
 
+        //Changing the retrived data to be able to use it to display the data 
         var userData = userSnapshot.data!.data() as Map<String, dynamic>;
 
+        //Accesing the image_url from the db to display the image
         String userImage = userData['image_url'];
 
+        //
         // ignore: unused_local_variable
         String username = userData['username'];
 
+        //Details about the currently logged in user profile picture, username and 
+        //total amount of reviews(does not count deleted reviews), button to change
+        //profile picture and a button to change username
         return Scaffold(
           backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
           appBar: const CustomAppBar(title: 'Your Profile'),
@@ -106,8 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 3,
                           ) +
                           Border.all(
-                            color:
-                                Theme.of(context).colorScheme.primaryContainer,
+                            color: Theme.of(context).colorScheme.primaryContainer,
                             width: 2,
                           ) +
                           Border.all(
@@ -124,8 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     height: 15,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        top: 5, left: 62, right: 62, bottom: 40),
+                    padding: const EdgeInsets.only(top: 5, left: 62, right: 62, bottom: 40),
                     child: Row(
                       children: [
                         const SizedBox(width: 40),
@@ -133,31 +137,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                               elevation: 4,
-                              shadowColor:
-                                  Theme.of(context).colorScheme.surfaceTint,
+                              shadowColor: Theme.of(context).colorScheme.surfaceTint,
                               shape: StadiumBorder(
-                                side: BorderSide(
-                                    width: 1,
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
+                                side: BorderSide(width: 1, color: Theme.of(context).colorScheme.primary),
                               ),
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer),
+                              backgroundColor: Theme.of(context).colorScheme.primaryContainer),
                           label: Text(
                             'Change Profile Photo',
-                            style: TextStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSecondaryContainer),
+                            style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer),
                           ),
                           onPressed: () {
                             showDialog(
-                            context: context, 
-                            builder: (BuildContext context) {
-                              return const ChangeProfilePictureDialog();
-                            } 
-                            );
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return const ChangeProfilePictureDialog();
+                                });
                           },
                           icon: const Icon(Icons.camera_alt),
                         )),
@@ -181,10 +175,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: 300,
                       decoration: ShapeDecoration(
                         gradient: LinearGradient(colors: [
-                          Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.1),
+                          Theme.of(context).colorScheme.primary.withOpacity(0.1),
                           Theme.of(context).colorScheme.primary.withOpacity(0.2)
                         ]),
                         shape: Border.all(
@@ -192,9 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               width: 1.5,
                             ) +
                             Border.all(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
+                              color: Theme.of(context).colorScheme.primaryContainer,
                               width: 1,
                             ) +
                             Border.all(
@@ -207,18 +196,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           DecoratedBox(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                  width: 1,
-                                  color:
-                                      const Color.fromARGB(100, 100, 100, 100)),
+                              border: Border.all(width: 1, color: const Color.fromARGB(100, 100, 100, 100)),
                             ),
                             child: Text(
                               ' Current Username: ',
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSecondaryContainer),
+                              style: TextStyle(fontSize: 22, color: Theme.of(context).colorScheme.onSecondaryContainer),
                             ),
                           ),
                           const SizedBox(
@@ -230,41 +212,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w300,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSecondaryContainer),
+                                color: Theme.of(context).colorScheme.onSecondaryContainer),
                           ),
                           const SizedBox(height: 18),
                           Center(
                             child: ElevatedButton.icon(
                               style: ElevatedButton.styleFrom(
                                   elevation: 4,
-                                  shadowColor:
-                                      Theme.of(context).colorScheme.surfaceTint,
+                                  shadowColor: Theme.of(context).colorScheme.surfaceTint,
                                   shape: StadiumBorder(
-                                    side: BorderSide(
-                                        width: 1,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary),
+                                    side: BorderSide(width: 1, color: Theme.of(context).colorScheme.primary),
                                   ),
-                                  backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer),
+                                  backgroundColor: Theme.of(context).colorScheme.primaryContainer),
                               label: Text(
                                 'Change Username',
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondaryContainer),
+                                style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer),
                               ),
                               onPressed: () {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return UsernameChangeDialog(
-                                          currentUsername: username,
-                                          onUpdate: updateUsername);
+                                      return UsernameChangeDialog(currentUsername: username, onUpdate: updateUsername);
                                     });
                               },
                               icon: const Icon(Icons.threesixty_rounded),
@@ -288,60 +256,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: FutureBuilder(
                       future: userPostCount,
                       builder: (ctx, postSnapshot) {
-                        if (postSnapshot.connectionState ==
-                            ConnectionState.waiting) {
+                        if (postSnapshot.connectionState == ConnectionState.waiting) {
                           return const CircularProgressIndicator();
                         } else if (postSnapshot.hasError) {
-                          return Text(
-                              'Error fetching post count: ${postSnapshot.error}');
+                          return Text('Error fetching post count: ${postSnapshot.error}');
                         } else {
                           int postCount = postSnapshot.data!;
                           return Opacity(
                             opacity: 0.8,
                             child: Container(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
+                              padding: const EdgeInsets.only(top: 10, bottom: 10),
                               height: 50,
                               width: 300,
                               decoration: ShapeDecoration(
                                 gradient: LinearGradient(colors: [
-                                  Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.1),
-                                  Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.2)
+                                  Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                  Theme.of(context).colorScheme.primary.withOpacity(0.2)
                                 ]),
                                 shape: Border.all(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context).colorScheme.primary,
                                       width: 1.5,
                                     ) +
                                     Border.all(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primaryContainer,
+                                      color: Theme.of(context).colorScheme.primaryContainer,
                                       width: 1,
                                     ) +
                                     Border.all(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
+                                      color: Theme.of(context).colorScheme.secondary,
                                       width: 0.5,
                                     ),
                               ),
                               child: Text(
-                                // ignore: unnecessary_brace_in_string_interps
-                                'Total Reviews: ${postCount}',
+                                'Total Reviews: $postCount',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w300,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondaryContainer),
+                                    color: Theme.of(context).colorScheme.onSecondaryContainer),
                               ),
                             ),
                           );

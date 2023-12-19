@@ -9,7 +9,9 @@ class UsernameChangeDialog extends StatefulWidget {
     required this.onUpdate
     });
     
+  //Callback function  
   final Function(String) onUpdate;
+
   final String currentUsername;
 
   @override
@@ -25,6 +27,8 @@ class UsernameChangeDialogState extends State<UsernameChangeDialog> {
     _usernameController = TextEditingController(text: widget.currentUsername);
   }
 
+  //Rendering a alert dialog where user can change his/her username after pressing 
+  //change username button in the profile screen
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

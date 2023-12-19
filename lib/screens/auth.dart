@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+//creating a reference to the authentication service
 final _firebase = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
@@ -31,16 +32,14 @@ class _AuthScreen extends State<AuthScreen> {
   File? _selectedImage;
   var _waitingAuth = false;
 
+  //Function to submit the information the user has entered (creating a new account)
   void _submit() async {
     final isValid = _formKey.currentState!.validate();
-
     if (!isValid || !_isLogin && _selectedImage == null) {
       //Configure error msg
       return;
     }
-
     _formKey.currentState!.save();
-
     try {
       setState(() {
         _waitingAuth = true;
@@ -55,7 +54,8 @@ class _AuthScreen extends State<AuthScreen> {
           email: _enteredEmail,
           password: _enteredPw,
         );
-
+        //Sending the image user took as profile picture to the storage then creating
+        //a download url for the img to then use that url to save it in the firestore db
         final storageRef = FirebaseStorage.instance
             .ref()
             .child('user_images')
@@ -64,6 +64,8 @@ class _AuthScreen extends State<AuthScreen> {
         await storageRef.putFile(_selectedImage!);
         final imageUrl = await storageRef.getDownloadURL();
 
+        //Save all the user credential in the firestore db 
+        //and the image url for the image in storage
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredential.user!.uid)
@@ -90,6 +92,8 @@ class _AuthScreen extends State<AuthScreen> {
     }
   }
 
+  //Rendering the authentication screen wich asks the user to 
+  //either create a new account or log in
   @override
   Widget build(BuildContext context) {
     return Scaffold(

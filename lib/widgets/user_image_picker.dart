@@ -16,6 +16,7 @@ class UserImagePicker extends StatefulWidget {
 class _UserImagePickerState extends State<UserImagePicker> {
   File? _pickedImageFile;
 
+  //Function to let the user take photo to have as a profile photo
   void _pickImage() async {
     final pickedImage = await ImagePicker()
         .pickImage(source: ImageSource.camera, imageQuality: 50, maxWidth: 200);
@@ -30,6 +31,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
     widget.onPickImage(_pickedImageFile!);
   }
 
+  //Rendering what is shown on auth screen
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -13,6 +13,8 @@ class BottomNavigation extends StatefulWidget {
   }
 }
 
+//Bottom navigation bar wich is used on a few screens inside the app 
+//created a seperate file to keep code a little bit cleaner and remove duplication
 class _BottomNavigation extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {

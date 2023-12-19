@@ -11,6 +11,8 @@ class MainScreen extends StatefulWidget {
   State<MainScreen> createState() => _MainScreenState();
 }
 
+//This is the homepage of the app where user can navigate to other screens 
+//or add a new drink review 
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {

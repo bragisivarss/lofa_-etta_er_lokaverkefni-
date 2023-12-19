@@ -24,17 +24,20 @@ class _AddDrinkScreen extends State<AddDrinkScreen> {
   final _aboutController = TextEditingController();
   final _ratingController = TextEditingController();
 
+  //Function to save a review the user has mage
   void _saveReview() async {
     setState(() {
       isLoading = true;
     });
 
+    //The information the user entered in the add review form
     final enteredName = _nameController.text;
     final enteredAbout = _aboutController.text;
     final enteredRating = _ratingController.text;
 
     var fixedRating = double.tryParse(enteredRating);
 
+    //Just some validation
     if (fixedRating == null) {
       return;
     }
@@ -43,29 +46,37 @@ class _AddDrinkScreen extends State<AddDrinkScreen> {
       return;
     }
 
+    //Accesing wich user is logged in
     final user = FirebaseAuth.instance.currentUser!;
 
+    //Reference to the drinks collection in firestore
     final CollectionReference drinksCollection =
         FirebaseFirestore.instance.collection('drinks');
 
+    //Creating a path to where the img will be saved in storage
     final storageRef = FirebaseStorage.instance
         .ref()
         .child('drink_images')
-        // ignore: unnecessary_brace_in_string_interps
-        .child('${user}${enteredName}${enteredAbout}.jpg');
+        .child('$user$enteredName$enteredAbout.jpg');
 
+    //Saving the img too the path prev created
     await storageRef.putFile(takenPicture!);
     final imageUrl = await storageRef.getDownloadURL();
 
+    //Reference to the specific user to associate the drink review to the user who is logged in
     final userData = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
         .get();
 
+    //Accesing the username
     String? uName = userData.data()!['username'] as String;
+    //Accesing the user id
     String? userId = user.uid;
+    //Creating an id for the review
     const itemId = DateTime.now;
 
+    //Creating a map to push to the db
     Map<String, dynamic> drinkData = {
       'title': enteredName,
       'about': enteredAbout,
@@ -76,6 +87,7 @@ class _AddDrinkScreen extends State<AddDrinkScreen> {
       'itemId': itemId
     };
 
+    //Pushing the data to db
     await drinksCollection.add(drinkData);
 
     setState(() {
@@ -83,6 +95,7 @@ class _AddDrinkScreen extends State<AddDrinkScreen> {
     });
   }
 
+//Disposing the controllers so they dont eat up memory
   @override
   void dispose() {
     super.dispose();
@@ -91,6 +104,8 @@ class _AddDrinkScreen extends State<AddDrinkScreen> {
     _ratingController.dispose();
   }
 
+//Rendering a screen where user can add information about a drink 
+//they want to create a review of
   @override
   Widget build(BuildContext context) {
     return Scaffold(

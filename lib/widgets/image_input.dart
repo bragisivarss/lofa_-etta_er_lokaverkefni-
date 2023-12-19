@@ -5,6 +5,7 @@ import 'dart:io';
 class ImageInput extends StatefulWidget {
   const ImageInput({super.key, required this.onPickImage});
 
+  //Callback function
   final void Function(File image) onPickImage;
 
   @override
@@ -13,9 +14,11 @@ class ImageInput extends StatefulWidget {
   }
 }
 
+//This is used on the add_drink screen
 class _ImageInputState extends State<ImageInput> {
   File? takenPicture;
 
+  //Function to take picture to have with review
   void _takePicture() async {
     final imagePicker = ImagePicker();
     final pickedImage =
@@ -34,6 +37,8 @@ class _ImageInputState extends State<ImageInput> {
 
   @override
   Widget build(BuildContext context) {
+
+    //The content wich is shown before the user takes a picture
     Widget content = TextButton.icon(
       icon: Icon(
         Icons.camera,
@@ -49,6 +54,7 @@ class _ImageInputState extends State<ImageInput> {
       onPressed: _takePicture,
     );
 
+    //Shows the picture the user has taken and is clickable to take another picture
     if (takenPicture != null) {
       content = GestureDetector(
         onTap: _takePicture,
@@ -60,6 +66,9 @@ class _ImageInputState extends State<ImageInput> {
         ),
       );
     }
+
+    //Container wich is used on the add_drink screen which either shows the photo that was taken or 
+    //shows an container with an text button to prompt the user to take photo
     return Container(
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 193, 185, 216),

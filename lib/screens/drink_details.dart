@@ -5,7 +5,6 @@ import 'package:dundaser/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-//Drink detail screen for reviewing information about drink or add/remove drink from favorites
 
 class DrinkDetailScreen extends StatelessWidget {
   const DrinkDetailScreen({
@@ -14,24 +13,31 @@ class DrinkDetailScreen extends StatelessWidget {
     required this.documentId,
   });
 
+//model for each drink
   final Drink drink;
 
+//Id for each drink to be able to add/remove from favorites
   final String documentId;
 
   @override
   Widget build(BuildContext context) {
+    //DB stuff
     final db = FirebaseFirestore.instance;
     final user = FirebaseAuth.instance.currentUser!;
 
+    //Using DateTime to create a unique id for each item to be able to reference it 
     final favId = DateTime.now();
     String custId = favId.toString();
 
+   //Function to add to favorites
     void addToFavorites() async {
+      // Reference to the favorites collection on db
       CollectionReference favoritesCollection =
           db.collection('users').doc(user.uid).collection('favorites');
 
       DocumentReference documentReference = favoritesCollection.doc(custId);
 
+      //This adds an item to favorites
       await documentReference.set({
         'title': drink.title,
         'about': drink.about,
@@ -53,13 +59,14 @@ class DrinkDetailScreen extends StatelessWidget {
 
         Navigator.of(context).pop();
 
-        // Delete an item from favorites
+        //This deletes an item from favorites
         await favoritesCollection.doc(favoriteDocumentId).delete();
       } catch (e) {
         //bua til error drasl ...
       }
     }
 
+//Drink detail screen to view more detail for each drink and buttons to add/remove drink from favorites
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       appBar: CustomAppBar(title: drink.title),
@@ -79,7 +86,7 @@ class DrinkDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(3),
                           border: Border.all(
                               strokeAlign: BorderSide.strokeAlignOutside,
-                              color: Colors.black.withOpacity(0.4),
+                              color: const Color.fromARGB(100, 100, 100, 100),
                               width: 1),
                         ),
                         child: Text(

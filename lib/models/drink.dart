@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-//Model for drink so a single drink
-
+//Model for a single drink
 class Drink {
   Drink({
     required this.title,
@@ -15,15 +14,10 @@ class Drink {
   final double rating;
   final String image;
 
-  factory Drink.fromSnapshots(Map<String, dynamic> data) {
-    return Drink(
-      title: data['title'] as String,
-      image: data['image'] as String,
-      about: data['about'] as String,
-      rating: (data['rating'] as num).toDouble(),
-    );
-  }
 
+  //Used in drin_list to be able to navigate to a single drink
+  //so im creating a "new" instance of the Drink model with the information im 
+  //getting from the firestore data to be able to navigate too the drink the user wants to view
   factory Drink.fromSnapshot(
       QueryDocumentSnapshot<Map<String, dynamic>> snapshot) {
     return Drink(

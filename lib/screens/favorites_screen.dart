@@ -13,6 +13,8 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+
+  //Rendering a screen to show all the reviews a user has added to favorites
   @override
   Widget build(BuildContext context) {
     return Scaffold(

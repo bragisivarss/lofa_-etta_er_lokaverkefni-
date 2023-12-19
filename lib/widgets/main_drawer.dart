@@ -11,11 +11,13 @@ class MainDrawer extends StatefulWidget {
   State<MainDrawer> createState() => _MainDrawerState();
 }
 
+//Drawer wich was moved to its own file to clean up code and make it easier to manage 
+//drawer includes a link to user profile, favorites screen, 
+//add review screen and log out
 class _MainDrawerState extends State<MainDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      //width: 270,
       child: Padding(
         padding: const EdgeInsets.only(top: 35),
         child: Column(

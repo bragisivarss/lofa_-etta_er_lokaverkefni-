@@ -6,6 +6,8 @@ import 'package:dundaser/models/drink.dart';
 class DrinksList extends StatelessWidget {
   const DrinksList({super.key});
 
+//Rendering all the reviews (used on main_screen) created in a seperate 
+//folder to keep code nicer and easier to manage and understand
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -74,7 +76,6 @@ class DrinksList extends StatelessWidget {
                 ),
                 onTap: () {
                   String documentId = loadedInfo[index].id;
-
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (ctx) => DrinkDetailScreen(
