@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:dundaser/widgets/image_input.dart';
+import 'package:uuid/uuid.dart';
 
 class AddDrinkScreen extends StatefulWidget {
   const AddDrinkScreen({super.key});
@@ -74,7 +75,9 @@ class _AddDrinkScreen extends State<AddDrinkScreen> {
     //Accesing the user id
     String? userId = user.uid;
     //Creating an id for the review
-    const itemId = DateTime.now;
+    const uuid = Uuid();
+    String reviewId = uuid.v4();
+
 
     //Creating a map to push to the db
     Map<String, dynamic> drinkData = {
@@ -84,7 +87,7 @@ class _AddDrinkScreen extends State<AddDrinkScreen> {
       'image': imageUrl,
       'username': uName,
       'userId': userId,
-      'itemId': itemId
+      'itemId': reviewId
     };
 
     //Pushing the data to db

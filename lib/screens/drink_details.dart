@@ -4,6 +4,7 @@ import 'package:dundaser/models/drink.dart';
 import 'package:dundaser/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 
 class DrinkDetailScreen extends StatelessWidget {
@@ -26,8 +27,9 @@ class DrinkDetailScreen extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser!;
 
     //Using DateTime to create a unique id for each item to be able to reference it 
-    final favId = DateTime.now();
-    String custId = favId.toString();
+  
+    const uuid = Uuid();
+    String custId = uuid.v4();
 
    //Function to add to favorites
     void addToFavorites() async {
