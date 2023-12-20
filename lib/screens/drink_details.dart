@@ -14,10 +14,10 @@ class DrinkDetailScreen extends StatelessWidget {
     required this.documentId,
   });
 
-//model for each drink
+  //model for each drink
   final Drink drink;
 
-//Id for each drink to be able to add/remove from favorites
+  //Id for each drink to be able to add/remove from favorites
   final String documentId;
 
   @override
@@ -45,6 +45,7 @@ class DrinkDetailScreen extends StatelessWidget {
         'about': drink.about,
         'rating': drink.rating,
         'image': drink.image,
+        'category': drink.category
       });
 
       // ignore: unused_local_variable
@@ -100,7 +101,7 @@ class DrinkDetailScreen extends StatelessWidget {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onPrimaryContainer,
-                                  fontSize: 36,
+                                  fontSize: 32,
                                   fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -113,7 +114,7 @@ class DrinkDetailScreen extends StatelessWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer,
-                            fontSize: 30,
+                            fontSize: 28,
                             fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(
@@ -124,7 +125,7 @@ class DrinkDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(3),
                           border: Border.all(
                               strokeAlign: BorderSide.strokeAlignOutside,
-                              color: Colors.black.withOpacity(0.4),
+                              color: const Color.fromARGB(100, 100, 100, 100),
                               width: 1),
                         ),
                         child: Text(
@@ -136,7 +137,7 @@ class DrinkDetailScreen extends StatelessWidget {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onPrimaryContainer,
-                                  fontSize: 36,
+                                  fontSize: 32,
                                   fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -149,7 +150,7 @@ class DrinkDetailScreen extends StatelessWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer,
-                            fontSize: 30,
+                            fontSize: 28,
                             fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(
@@ -160,7 +161,7 @@ class DrinkDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(3),
                           border: Border.all(
                               strokeAlign: BorderSide.strokeAlignOutside,
-                              color: Colors.black.withOpacity(0.4),
+                              color: const Color.fromARGB(100, 100, 100, 100),
                               width: 1),
                         ),
                         child: Text(
@@ -172,7 +173,7 @@ class DrinkDetailScreen extends StatelessWidget {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onPrimaryContainer,
-                                  fontSize: 36,
+                                  fontSize: 32,
                                   fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -185,7 +186,43 @@ class DrinkDetailScreen extends StatelessWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .onPrimaryContainer,
-                            fontSize: 30,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(3),
+                          border: Border.all(
+                              strokeAlign: BorderSide.strokeAlignOutside,
+                              color: const Color.fromARGB(100, 100, 100, 100),
+                              width: 1),
+                        ),
+                        child: Text(
+                          'Category',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge!
+                              .copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        drink.category,
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
+                            fontSize: 26,
                             fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(

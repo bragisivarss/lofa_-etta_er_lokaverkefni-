@@ -1,5 +1,5 @@
 import 'package:dundaser/models/bottom_navigation.dart';
-import 'package:dundaser/models/favorites.dart';
+import 'package:dundaser/widgets/favorites.dart';
 import 'package:dundaser/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 

@@ -20,7 +20,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
   //Function to let the user take photo to have as a profile photo
   void _pickImage() async {
     final pickedImage = await ImagePicker()
-        .pickImage(source: ImageSource.camera, imageQuality: 50, maxWidth: 200);
+        .pickImage(source: ImageSource.camera, maxWidth: 200);
 
     if (pickedImage == null) {
       return;
