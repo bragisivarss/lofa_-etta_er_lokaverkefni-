@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
-
 class DrinkDetailScreen extends StatelessWidget {
   const DrinkDetailScreen({
     super.key,
@@ -26,47 +25,39 @@ class DrinkDetailScreen extends StatelessWidget {
     final db = FirebaseFirestore.instance;
     final user = FirebaseAuth.instance.currentUser!;
 
-    //Using DateTime to create a unique id for each item to be able to reference it 
-  
+    //Using DateTime to create a unique id for each item to be able to reference it
+
     const uuid = Uuid();
     String custId = uuid.v4();
 
-   //Function to add to favorites
+    //Function to add to favorites
     void addToFavorites() async {
-      // Reference to the favorites collection on db
-      CollectionReference favoritesCollection =
-          db.collection('users').doc(user.uid).collection('favorites');
+      
+        // Reference to the favorites collection on db
+        CollectionReference favoritesCollection = db.collection('users').doc(user.uid).collection('favorites');
 
-      DocumentReference documentReference = favoritesCollection.doc(custId);
+        DocumentReference documentReference = favoritesCollection.doc(custId);
 
-      //This adds an item to favorites
-      await documentReference.set({
-        'title': drink.title,
-        'about': drink.about,
-        'rating': drink.rating,
-        'image': drink.image,
-        'category': drink.category
-      });
+        //This adds an item to favorites
+        await documentReference.set({
+          'title': drink.title,
+          'about': drink.about,
+          'rating': drink.rating,
+          'image': drink.image,
+          'category': drink.category
+        });
 
-      // ignore: unused_local_variable
-      String documentId = custId;
+        // ignore: unused_local_variable
+        String documentId = custId;
     }
 
     void deleteFromFavorites(String uid, String favoriteDocumentId) async {
-      try {
-        // Reference to the favorites collection on db
-        CollectionReference favoritesCollection = FirebaseFirestore.instance
-            .collection('users')
-            .doc(uid)
-            .collection('favorites');
-
+        CollectionReference favoritesCollection =
+            FirebaseFirestore.instance.collection('users').doc(uid).collection('favorites');
         Navigator.of(context).pop();
 
         //This deletes an item from favorites
         await favoritesCollection.doc(favoriteDocumentId).delete();
-      } catch (e) {
-        //bua til error drasl ...
-      }
     }
 
 //Drink detail screen to view more detail for each drink and buttons to add/remove drink from favorites
@@ -94,15 +85,10 @@ class DrinkDetailScreen extends StatelessWidget {
                         ),
                         child: Text(
                           'Drink Name',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineLarge!
-                              .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(
@@ -111,9 +97,7 @@ class DrinkDetailScreen extends StatelessWidget {
                       Text(
                         drink.title,
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
+                            color: Theme.of(context).colorScheme.onPrimaryContainer,
                             fontSize: 28,
                             fontWeight: FontWeight.w500),
                       ),
@@ -130,15 +114,10 @@ class DrinkDetailScreen extends StatelessWidget {
                         ),
                         child: Text(
                           'Drink Review',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineLarge!
-                              .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(
@@ -147,9 +126,7 @@ class DrinkDetailScreen extends StatelessWidget {
                       Text(
                         drink.about,
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
+                            color: Theme.of(context).colorScheme.onPrimaryContainer,
                             fontSize: 28,
                             fontWeight: FontWeight.w500),
                       ),
@@ -166,15 +143,10 @@ class DrinkDetailScreen extends StatelessWidget {
                         ),
                         child: Text(
                           'Drink Rating',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineLarge!
-                              .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(
@@ -183,9 +155,7 @@ class DrinkDetailScreen extends StatelessWidget {
                       Text(
                         drink.rating.toString(),
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
+                            color: Theme.of(context).colorScheme.onPrimaryContainer,
                             fontSize: 28,
                             fontWeight: FontWeight.w500),
                       ),
@@ -202,15 +172,10 @@ class DrinkDetailScreen extends StatelessWidget {
                         ),
                         child: Text(
                           'Category',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineLarge!
-                              .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       const SizedBox(
@@ -219,9 +184,7 @@ class DrinkDetailScreen extends StatelessWidget {
                       Text(
                         drink.category,
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimaryContainer,
+                            color: Theme.of(context).colorScheme.onPrimaryContainer,
                             fontSize: 26,
                             fontWeight: FontWeight.w500),
                       ),
@@ -243,9 +206,7 @@ class DrinkDetailScreen extends StatelessWidget {
                                 width: 3,
                               ) +
                               Border.all(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
+                                color: Theme.of(context).colorScheme.primaryContainer,
                                 width: 2,
                               ) +
                               Border.all(
@@ -263,22 +224,37 @@ class DrinkDetailScreen extends StatelessWidget {
                           ElevatedButton.icon(
                             style: ButtonStyle(
                               elevation: MaterialStateProperty.all(10),
-                              backgroundColor: MaterialStateProperty.all(
-                                  Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Theme.of(context).colorScheme.primaryContainer),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  side: BorderSide(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
+                                  side: BorderSide(color: Theme.of(context).colorScheme.primary),
                                 ),
                               ),
                             ),
-                            onPressed: addToFavorites,
+                            onPressed: () {
+                              try {
+                                addToFavorites();
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Added to favorites'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Failed To Add To Favorites',
+                                    ),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }
+                            },
                             icon: Icon(
                               Icons.star_border_purple500,
                               color: Theme.of(context).colorScheme.onPrimary,
@@ -286,27 +262,38 @@ class DrinkDetailScreen extends StatelessWidget {
                             ),
                             label: Text(
                               'Add to Favorites',
-                              style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer),
+                              style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
                             ),
                           ),
                           MaterialButton(
                             elevation: 10,
                             color: Theme.of(context).colorScheme.background,
-                            shape: const UnderlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8))),
+                            shape: const UnderlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                             onPressed: () {
-                              deleteFromFavorites(user.uid, documentId);
+                              try {
+                                deleteFromFavorites(user.uid, documentId);
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Removed From Favorites'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Failed to Remove From Favorites',
+                                    ),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }
                             },
                             child: Text(
                               'Remove From Favorites',
-                              style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer),
+                              style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
                             ),
                           ),
                         ],
