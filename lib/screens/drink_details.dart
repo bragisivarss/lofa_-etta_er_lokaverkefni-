@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dundaser/models/bottom_navigation.dart';
+import 'package:dundaser/widgets/bottom_navigation.dart';
 import 'package:dundaser/models/drink.dart';
 import 'package:dundaser/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,7 +32,7 @@ class DrinkDetailScreen extends StatelessWidget {
 
     //Function to add to favorites
     void addToFavorites() async {
-      
+
         // Reference to the favorites collection on db
         CollectionReference favoritesCollection = db.collection('users').doc(user.uid).collection('favorites');
 

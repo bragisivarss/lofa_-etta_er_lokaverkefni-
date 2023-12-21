@@ -1,5 +1,5 @@
 //Model for drink category
 
-enum Categories { alchahol, nonAlchaholic, soda, juice, energyDrink, coffe }
+enum Categories { alcohol, nonAlcoholic, soda, juice, energyDrink, coffe }
 
 

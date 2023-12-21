@@ -70,7 +70,7 @@ class _BottomNavigation extends State<BottomNavigation> {
         BottomNavigationBarItem(
           label: 'Home',
           icon: Icon(
-            Icons.home,
+            Icons.home_outlined,
             color: Theme.of(context).colorScheme.onBackground,
           ),
         ),

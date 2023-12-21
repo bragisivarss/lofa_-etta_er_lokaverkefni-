@@ -1,10 +1,13 @@
+import 'package:dundaser/models/categories.dart';
+import 'package:dundaser/models/category_helper.dart';
 import 'package:dundaser/screens/drink_details.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dundaser/models/drink.dart';
 
 class DrinksList extends StatelessWidget {
-  const DrinksList({super.key});
+  const DrinksList({super.key, this.selectedCategories});
+  final List<Categories>? selectedCategories;
 
 //Rendering all the reviews (used on main_screen) created in a seperate 
 //folder to keep code nicer and easier to manage and understand
@@ -33,8 +36,16 @@ class DrinksList extends StatelessWidget {
 
         final loadedInfo = drinkSnapshots.data!.docs;
 
+        List<DocumentSnapshot> filteredDrinks = selectedCategories != null
+    ? loadedInfo.where((drink) {
+        String categoryString = drink['category']; // Replace 'category' with the actual field name
+        Categories category = convertToCategory(categoryString);
+        return selectedCategories!.contains(category);
+      }).toList()
+    : List.from(loadedInfo);
+
         return ListView.builder(
-          itemCount: loadedInfo.length,
+          itemCount: filteredDrinks.length,
           itemBuilder: (ctx, index) {
             String title = loadedInfo[index]['title'];
             String image = loadedInfo[index]['image'];

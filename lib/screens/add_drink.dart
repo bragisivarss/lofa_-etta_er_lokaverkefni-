@@ -19,7 +19,7 @@ class AddDrinkScreen extends StatefulWidget {
 }
 
 class _AddDrinkScreen extends State<AddDrinkScreen> {
-  var selectedCategory = Categories.alchahol;
+  var selectedCategory = Categories.alcohol;
   var isLoading = false;
   File? takenPicture;
   final _nameController = TextEditingController();

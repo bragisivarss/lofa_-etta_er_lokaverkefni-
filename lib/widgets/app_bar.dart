@@ -9,8 +9,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
-//AppBar wich is used on a few places throughout the app 
-//removing duplication
+  //AppBar wich is used on a few places throughout the app 
+  //removing duplication
   @override
   Widget build(BuildContext context) {
     return AppBar(

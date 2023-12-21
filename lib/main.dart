@@ -4,6 +4,7 @@ import 'package:dundaser/screens/splash.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,6 +24,10 @@ class App extends StatelessWidget {
   //This is the root of the application with some theme configurations
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       title: 'Lokaverk',
       theme: ThemeData().copyWith(
